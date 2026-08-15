@@ -27,12 +27,18 @@ class TimerWidget : AppWidgetProvider() {
             if (appWidgetId != -1) {
                 val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
                 val seconds = prefs.getInt("duration_$appWidgetId", 120)
+                val label = prefs.getString("label_$appWidgetId", formatTime(seconds)) ?: formatTime(seconds)
                 val timerIntent = Intent(AlarmClock.ACTION_SET_TIMER).apply {
                     putExtra(AlarmClock.EXTRA_LENGTH, seconds)
-                    putExtra(AlarmClock.EXTRA_SKIP_UI, false)
+                    putExtra(AlarmClock.EXTRA_SKIP_UI, true)
+                    putExtra(AlarmClock.EXTRA_MESSAGE, label)
                     flags = Intent.FLAG_ACTIVITY_NEW_TASK
                 }
-                context.startActivity(timerIntent)
+                try {
+                    context.startActivity(timerIntent)
+                } catch (e: Exception) {
+                    // No clock app available on this device
+                }
             }
         }
     }
