@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.provider.AlarmClock
 import android.widget.RemoteViews
+import android.widget.Toast
 
 class TimerWidget : AppWidgetProvider() {
 
@@ -36,8 +37,9 @@ class TimerWidget : AppWidgetProvider() {
                 }
                 try {
                     context.startActivity(timerIntent)
+                    Toast.makeText(context, "$label timer started", Toast.LENGTH_SHORT).show()
                 } catch (e: Exception) {
-                    // No clock app available on this device
+                    Toast.makeText(context, "No clock app found", Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -80,7 +82,6 @@ class TimerWidget : AppWidgetProvider() {
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
             )
             views.setOnClickPendingIntent(R.id.widget_root, pendingIntent)
-
             appWidgetManager.updateAppWidget(appWidgetId, views)
         }
     }

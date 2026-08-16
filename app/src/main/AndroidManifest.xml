@@ -9,7 +9,7 @@
         android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
         android:supportsRtl="true">
 
-        <!-- Widget provider -->
+        <!-- Single timer widget -->
         <receiver
             android:name=".TimerWidget"
             android:exported="true">
@@ -22,9 +22,32 @@
                 android:resource="@xml/timer_widget_info"/>
         </receiver>
 
-        <!-- Config screen shown when placing the widget -->
+        <!-- Multi-timer strip widget -->
+        <receiver
+            android:name=".MultiTimerWidget"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+                <action android:name="com.timerwidget.START_MULTI_TIMER"/>
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/multi_timer_widget_info"/>
+        </receiver>
+
+        <!-- Config for single timer widget -->
         <activity
             android:name=".TimerConfigActivity"
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE"/>
+            </intent-filter>
+        </activity>
+
+        <!-- Config for multi-timer strip widget -->
+        <activity
+            android:name=".MultiTimerConfigActivity"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
             <intent-filter>
