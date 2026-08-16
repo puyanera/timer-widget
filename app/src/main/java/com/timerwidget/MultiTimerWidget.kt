@@ -8,7 +8,6 @@ import android.content.Intent
 import android.provider.AlarmClock
 import android.view.View
 import android.widget.RemoteViews
-import android.widget.Toast
 
 class MultiTimerWidget : AppWidgetProvider() {
 
@@ -36,9 +35,9 @@ class MultiTimerWidget : AppWidgetProvider() {
                 }
                 try {
                     context.startActivity(timerIntent)
-                    Toast.makeText(context, "$label timer started", Toast.LENGTH_SHORT).show()
+                    NotificationHelper.showTimerStarted(context, label)
                 } catch (e: Exception) {
-                    Toast.makeText(context, "No clock app found", Toast.LENGTH_SHORT).show()
+                    // No clock app available
                 }
             }
         }

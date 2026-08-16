@@ -3,6 +3,8 @@ package com.timerwidget
 import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
@@ -42,10 +44,19 @@ class MultiTimerConfigActivity : AppCompatActivity() {
         }
 
         setContentView(R.layout.activity_multi_config)
+        requestNotificationPermission()
         setupPresetButtons()
         setupCustomInput()
         setupSaveButton()
         refreshPresetButtonStates()
+    }
+
+    private fun requestNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (checkSelfPermission(android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(arrayOf(android.Manifest.permission.POST_NOTIFICATIONS), 1)
+            }
+        }
     }
 
     private fun setupPresetButtons() {
